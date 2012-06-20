@@ -70,6 +70,14 @@ module CouchRest
       alias :new_record? :new?
       alias :new_document? :new?
 
+      def to_partial_path
+        @to_partial_path ||= begin
+          element = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.demodulize(self))
+          collection = ActiveSupport::Inflector.tableize(self)
+          "#{collection}/#{element}".freeze
+        end
+      end
+
       # Compare this model with another by confirming to see 
       # if the IDs and their databases match!
       #
